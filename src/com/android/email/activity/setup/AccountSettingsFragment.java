@@ -20,7 +20,6 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
-import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -984,11 +983,12 @@ public class AccountSettingsFragment extends MailAccountPrefsFragment
                     }
                 }
 
+                boolean isArgbNotifColorSupported = getResources().getBoolean(
+                        com.android.internal.R.bool.config_multiColorNotificationLed);
                 mInboxLights = (FolderNotificationLightPreference) findPreference(
                         FolderPreferences.PreferenceKeys.NOTIFICATION_LIGHTS);
-                final NotificationManager nm = mContext.getSystemService(NotificationManager.class);
                 if (mInboxLights != null) {
-                    if (nm.doLightsSupport(NotificationManager.LIGHTS_RGB_NOTIFICATION_LED)) {
+                    if (isArgbNotifColorSupported) {
                         updateNotificationLight(mInboxFolderPreferences.getNotificationLight());
                         mInboxLights.setOnPreferenceChangeListener(this);
                     } else {

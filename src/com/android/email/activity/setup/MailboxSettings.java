@@ -19,7 +19,6 @@ package com.android.email.activity.setup;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.LoaderManager;
-import android.app.NotificationManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -471,9 +470,9 @@ public class MailboxSettings extends BasePreferenceActivity {
             }
             mPrefNotifLights = (FolderNotificationLightPreference) findPreference(
                     PREF_NOTIF_LIGHTS_KEY);
-            NotificationManager nm = getActivity().getSystemService(NotificationManager.class);
-            if (mPrefNotifLights != null &&
-                    !nm.doLightsSupport(NotificationManager.LIGHTS_RGB_NOTIFICATION_LED)) {
+            boolean isArgbNotifColorSupported = getResources().getBoolean(
+                    com.android.internal.R.bool.config_multiColorNotificationLed);
+            if (mPrefNotifLights != null && !isArgbNotifColorSupported) {
                 getPreferenceScreen().removePreference(mPrefNotifLights);
             }
 
